@@ -1,0 +1,9 @@
+.contact {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    border: 1px solid black;
+    padding: 0.5rem;
+    border-radius: 6px;
+    filter: grayscale(1);
+}
