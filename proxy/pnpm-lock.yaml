@@ -7,10 +7,11 @@ settings:
 importers:
 
   .:
-    devDependencies:
+    dependencies:
       '@google-cloud/functions-framework':
         specifier: ^4.0.0
         version: 4.0.0
+    devDependencies:
       cors:
         specifier: ^2.8.5
         version: 2.8.5
