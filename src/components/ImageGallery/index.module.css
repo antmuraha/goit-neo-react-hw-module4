@@ -1,0 +1,10 @@
+.imageGallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(30vh, 1fr));
+    gap: 1rem;
+  padding: 1rem;
+
+    li {
+        list-style: none;
+    }
+}

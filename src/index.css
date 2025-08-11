@@ -7,8 +7,40 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  --color-primary: #0070f3;
+  --color-secondary: #1db954;
+  --color-accent: #ff4081;
 }
 
 * {
   box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #f0f0f0;
+}
+
+img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+ul {
+  margin: 0;
+}
+
+input {
+  outline: none;
+}
+
+button {
+  outline: none;
+  border: none;
+  background: none;
+  cursor: pointer;
 }

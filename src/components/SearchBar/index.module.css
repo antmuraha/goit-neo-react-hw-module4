@@ -1,0 +1,27 @@
+.searchBar {
+    z-index: 1;
+    position: sticky;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    background-color: var(--color-primary);
+    padding: 12px 24px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+    form {
+        display: inline-block;
+        position: relative;
+    }
+
+    input {
+        padding: 4px;
+        padding-left: 24px;
+    }
+
+    button {
+        position: absolute;
+        left: 0;
+        top: 5px;
+    }
+}

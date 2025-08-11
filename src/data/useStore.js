@@ -1,81 +1,79 @@
 import { useEffect } from 'react';
 import { useState } from 'react';
-
-const LOCAL_STORAGE_KEY = 'contacts-state';
+import { fetchImages } from './api';
 
 const initialState = {
-  contacts: [],
+  images: [],
+  page: 1,
+  loading: false,
+  ended: false,
+  error: false,
   search: '',
-};
-
-const saveToLocalStorage = state => {
-  localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(state));
-};
-
-const loadFromLocalStorage = () => {
-  const savedState = localStorage.getItem(LOCAL_STORAGE_KEY);
-  if (savedState) {
-    try {
-      return JSON.parse(savedState);
-    } catch (error) {
-      console.error('Error parsing saved state:', error);
-    }
-  }
-  return initialState; // Return initial state if no saved state found
+  selectedImageIdx: null,
 };
 
 const useStore = () => {
-  const [state, setState] = useState(loadFromLocalStorage());
+  const [state, setState] = useState({ ...initialState });
 
-  const handlerSearch = event => {
-    const searchValue = event.target.value;
+  const handlerSearch = searchValue => {
     setState(prevState => ({
       ...prevState,
+      page: 1,
+      ended: false,
+      images: [],
       search: searchValue,
     }));
   };
 
-  const handlerAddContact = ({ id, name, number }) => {
-    const newContact = {
-      id,
-      name,
-      number,
-    };
-
+  const handlerSelectImage = imageIdx => {
     setState(prevState => ({
       ...prevState,
-      contacts: [...prevState.contacts, newContact],
+      selectedImageIdx: imageIdx,
     }));
   };
 
-  const handlerDeleteContact = contactId => {
+  const handlerLoadMore = () => {
     setState(prevState => ({
       ...prevState,
-      contacts: prevState.contacts.filter(contact => contact.id !== contactId),
+      error: false,
+      page: prevState.error ? 1 : prevState.page + 1,
     }));
   };
 
-  // Save state to localStorage before the page unloads
+  const setLoading = isLoading => {
+    setState(prevState => ({
+      ...prevState,
+      loading: isLoading,
+    }));
+  };
+
   useEffect(() => {
-    function saveCallback() {
-      saveToLocalStorage(state);
-    }
-    window.addEventListener('beforeunload', saveCallback);
-    return () => {
-      window.removeEventListener('beforeunload', saveCallback);
-    };
-  }, [state]);
+    setLoading(true);
+    fetchImages(state.page, state.search)
+      .then(data => {
+        setState(prevState => ({
+          ...prevState,
+          images: state.page === 1 ? data.results : [...prevState.images, ...data.results],
+          loading: false,
+          ended: data.results.length === 0 || data.total_pages === state.page,
+        }));
+      })
+      .catch(() => {
+        setState(prevState => ({
+          ...prevState,
+          error: true,
+        }));
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, [state.page, state.search, state.error]);
 
   return {
-    state: {
-      ...state,
-      contacts: state.search
-        ? state.contacts.filter(contact => contact.name.toLowerCase().includes(state.search.toLowerCase()))
-        : state.contacts,
-    },
+    ...state,
     handlerSearch,
-    handlerAddContact,
-    handlerDeleteContact,
+    handlerSelectImage,
+    handlerLoadMore,
   };
 };
 
