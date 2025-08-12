@@ -1,7 +1,10 @@
 const ACCESS_KEY = process.env.ACCESS_KEY;
 
 export const proxy = async (req, res) => {
-  res.set('Access-Control-Allow-Origin', process.env.NODE_ENV === 'production' ? 'https://antmuraha.github.io' : '*');
+  res.set(
+    'Access-Control-Allow-Origin',
+    process.env.NODE_ENV === 'production' ? 'https://goit-neo-react-hw-module4-cyan-omega.vercel.app' : '*'
+  );
   res.set('Access-Control-Allow-Methods', 'GET, OPTIONS');
   res.set('Access-Control-Allow-Headers', 'Content-Type');
   res.set('Accept-Version', 'v1');
