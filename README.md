@@ -1,54 +1,63 @@
-# Phonebook App
 
-A React-based contact management application that allows users to store, search, and manage their contacts. This project is part of the GoIT React course homework (Module 3).
+# Image Search App
+
+A modern React application for searching and browsing images. Users can search for images by keyword, view results in a responsive gallery, open images in a modal, and load more results. Built as part of the GoIT React course (Module 4).
+
 
 ## 🚀 Features
 
-- **Contact Management**: Add new contacts with name and phone number
-- **Form Validation**: Input validation using Formik and Yup schemas
-- **Search Functionality**: Real-time search through contacts by name
-- **Contact Deletion**: Remove contacts from the phonebook
-- **Data Persistence**: Contact data is saved to localStorage and persists across browser sessions
-- **Responsive Design**: Clean, modern interface with CSS modules
-- **Duplicate Prevention**: Prevents adding contacts with duplicate names
+- **Image Search**: Search for images by keyword using a public API (via a secure proxy)
+- **Image Gallery**: Responsive grid gallery with image cards
+- **Image Modal**: Click any image to view it in a modal with details
+- **Load More**: Fetch more images with a single click
+- **Loader & Error Handling**: Visual loader and error messages for better UX
+- **Toast Notifications**: User feedback for search and errors
+
 
 ## 🛠️ Technologies Used
 
-- **React 19.1.0** - Modern React with hooks
-- **Vite 7.0.4** - Fast build tool and development server
-- **Formik 2.4.6** - Form handling and validation
-- **Yup 1.7.0** - Schema validation library
-- **CSS Modules** - Scoped styling for components
-- **Local Storage API** - Client-side data persistence
-- **ESLint** - Code linting and formatting
+- **React 19.1.0** – Modern React with hooks
+- **Vite 7.0.4** – Fast build tool and dev server
+- **Axios** – HTTP client for API requests
+- **react-modal** – Accessible modal dialogs
+- **react-hot-toast** – Toast notifications
+- **CSS Modules** – Scoped component styling
+- **ESLint** – Code linting and formatting
+
 
 ## 📁 Project Structure
 
 ```
 src/
-├── App.jsx                 # Main application component
-├── app.module.css         # Global application styles
-├── main.jsx               # Application entry point
+├── App.jsx                # Main application component
+├── app.module.css         # Global styles
+├── main.jsx               # App entry point
 ├── components/
-│   ├── Contact/           # Individual contact display component
-│   ├── ContactForm/       # Contact creation form with validation
-│   ├── ContactList/       # List of all contacts
-│   └── SearchBox/         # Search functionality component
+│   ├── ErrorMessage/      # Error message UI
+│   ├── ImageCard/         # Single image card
+│   ├── ImageGallery/      # Gallery grid
+│   ├── ImageModal/        # Modal for image preview
+│   ├── Loader/            # Loader spinner
+│   ├── LoadMoreBtn/       # Load more button
+│   ├── SearchBar/         # Search input form
+│   └── toast/             # Toast notifications
 ├── data/
-│   └── useStore.js        # Custom hook for state management
+│   ├── api.js             # API request logic
+│   └── useStore.js        # Custom state management hook
 └── libs/
     └── classnames.js      # Utility for conditional CSS classes
 ```
 
+
 ## 🎯 How It Works
 
-1. **Add Contacts**: Fill out the form with a name and phone number to add new contacts
-2. **Form Validation**: The form uses Yup validation schema to ensure:
-   - Name field is required and must be at least 3 characters
-   - Phone number field is required and follows the pattern XXX-X-XX
-3. **Search Contacts**: Use the search box to filter contacts by name in real-time
-4. **Delete Contacts**: Click the delete button next to any contact to remove it
-5. **Data Persistence**: All contact data is automatically saved to localStorage
+1. **Search Images**: Enter a keyword (min 3 characters) in the search bar and submit.
+2. **View Results**: Images matching your query appear in a gallery grid.
+3. **Load More**: Click "Load More" to fetch additional results.
+4. **Image Modal**: Click any image to view it larger in a modal with details.
+5. **Error Handling**: If the API fails, an error message and toast notification are shown.
+6. **User Feedback**: Toasts provide info and error feedback for user actions.
+
 
 ## 🚀 Getting Started
 
@@ -59,10 +68,11 @@ src/
 
 ### Installation
 
+
 1. Clone the repository:
 ```bash
 git clone <repository-url>
-cd goit-neo-react-hw-module3
+cd goit-neo-react-hw-module4
 ```
 
 2. Install dependencies:
@@ -75,77 +85,61 @@ pnpm install
 pnpm dev
 ```
 
+
 4. Open your browser and navigate to `http://localhost:5173`
+
 
 ### Available Scripts
 
-- `pnpm dev` - Start development server
-- `pnpm build` - Build for production
-- `pnpm lint` - Run ESLint
-- `pnpm preview` - Preview production build
+- `pnpm dev` – Start development server
+- `pnpm build` – Build for production
+- `pnpm lint` – Run ESLint
+- `pnpm preview` – Preview production build
+
 
 ## 💡 Key Implementation Details
 
-### Form Handling with Formik
+### State Management
 
-The application uses Formik for form management, providing:
-- Form state management
-- Field validation on blur and submit
-- Error message display
-- Form submission handling
+- Uses a custom `useStore` hook for managing image data, search state, loading, errors, and pagination.
 
-### Validation with Yup
+### API Integration
 
-Custom validation schema ensures:
-- Required field validation
-- Minimum length requirements for names
-- Phone number format validation
-
-### Custom State Management Hook
-
-The app uses a custom `useStore` hook that handles:
-- State initialization from localStorage
-- Contact add/delete operations
-- Search functionality
-- Automatic saving to localStorage
+- Fetches images from a public API via a secure Node.js proxy (see `/proxy`).
+- Handles pagination and search queries.
 
 ### Component Architecture
 
-- **Modular Design**: Each component has its own directory with JSX and CSS modules
-- **Props-based Communication**: Data flows down through props
-- **Controlled Components**: Form inputs are controlled by Formik state
+- **SearchBar**: Handles user input and validation for search terms.
+- **ImageGallery & ImageCard**: Displays images in a responsive grid.
+- **ImageModal**: Shows a larger image and details in a modal dialog.
+- **Loader**: Shows a spinner while loading data.
+- **LoadMoreBtn**: Loads more images on click.
+- **ErrorMessage**: Displays errors if API requests fail.
+- **Toaster**: Shows toast notifications for user feedback.
 
-### Data Persistence
+### Styling
 
-- Contact data is automatically saved to localStorage
-- Data persists across browser sessions
-- Graceful fallback to initial state if localStorage data is corrupted
+- CSS Modules for component-scoped, maintainable styles.
 
-## 🎨 Styling
-
-The application uses CSS Modules for component-scoped styling, ensuring:
-- No style conflicts between components
-- Maintainable and organized CSS
-- Clean, modern user interface
 
 ## 📝 Learning Objectives
 
 This project demonstrates:
 - React functional components and hooks
-- Form handling with Formik
-- Form validation with Yup
-- State management in React
-- Local storage integration
+- Custom hooks for state management
+- API integration and error handling
+- Modal dialogs and accessibility
+- Toast notifications for UX
 - Component composition and reusability
-- CSS Modules usage
-- Event handling in React
-- Conditional rendering
-- Props passing and data flow
-- Search and filter functionality
+- CSS Modules for styling
+- Event handling and conditional rendering
+
 
 ## 🤝 Contributing
 
-This is a homework project for the GoIT React course. If you're also a student working on similar exercises, feel free to use this as a reference, but make sure to understand the concepts and implement your own solution.
+This is a homework project for the GoIT React course. If you are a student, feel free to use this as a reference, but make sure to understand the concepts and write your own code.
+
 
 ## 📄 License
 
